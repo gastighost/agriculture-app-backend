@@ -9,3 +9,68 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Location {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  region    String
+  country   String
+  latitude  Float?
+  longitude Float?
+  Farm      Farm[]
+  Market    Market[]
+}
+
+model Farm {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  location   Location  @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  locationId String    @db.ObjectId
+  areaSize   Float
+  crops      Crop[]
+  weather    Weather[]
+  soil       Soil[]
+}
+
+type Weather {
+  date        DateTime
+  temperature Float
+  humidity    Float
+  rainfall    Float
+}
+
+type Soil {
+  date      DateTime
+  pH        Float
+  moisture  Float
+  fertility Float
+}
+
+model Crop {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  plantingDate DateTime
+  harvestDate  DateTime
+  status       cropStatus
+  area         Float
+  Farm         Farm       @relation(fields: [farmId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  farmId       String     @db.ObjectId
+  markets      Market[]
+}
+
+enum cropStatus {
+  Growing
+  Harvesting
+  Harvested
+}
+
+model Market {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  Crop       Crop     @relation(fields: [cropId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cropId     String   @db.ObjectId
+  price      Float
+  amountKg   Float
+  date       DateTime
+  location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  locationId String   @db.ObjectId
+}
