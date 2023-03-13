@@ -6,9 +6,10 @@ import { PrismaService } from '../../services/prisma/prisma.service';
 export class FarmsService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getAllFarms() {
+  async getAllFarms(queryData: Prisma.CropWhereInput) {
     return this.prismaService.farm.findMany({
       select: { name: true, areaSize: true, id: true, location: true },
+      where: queryData,
     });
   }
 

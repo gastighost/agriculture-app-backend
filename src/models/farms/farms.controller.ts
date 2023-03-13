@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { JwtAuthGuard } from '../../services/auth/jwt-auth.guard';
 import { AddSoilDto } from './dto/add-soil.dto';
 import { AddWeatherDto } from './dto/add-weather.dto';
 import { CreateFarmDto } from './dto/create-farm.dto';
+import { FarmQueryDto } from './dto/farm-query.dto';
 import { UpdateFarmDto } from './dto/update-farm.dto';
 import { FarmsService } from './farms.service';
 
@@ -21,8 +23,8 @@ export class FarmsController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getAllFarms() {
-    const farms = await this.farmsService.getAllFarms();
+  async getAllFarms(@Query() query: FarmQueryDto) {
+    const farms = await this.farmsService.getAllFarms(query);
 
     return { message: 'Farms successfully retrieved!', farms };
   }

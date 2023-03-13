@@ -5,6 +5,7 @@ import { FarmsModule } from './models/farms/farms.module';
 import { UsersModule } from './models/users/users.module';
 import { AuthModule } from './services/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { CropsModule } from './models/crops/crops.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    CropsModule,
   ],
 })
 export class AppModule {}

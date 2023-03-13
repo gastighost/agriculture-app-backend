@@ -61,17 +61,17 @@ model Crop {
   name         String
   plantingDate DateTime
   harvestDate  DateTime
-  status       cropStatus
+  status       CropStatus
   area         Float
-  Farm         Farm       @relation(fields: [farmId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  farm         Farm       @relation(fields: [farmId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   farmId       String     @db.ObjectId
   markets      Market[]
 }
 
-enum cropStatus {
-  Growing
-  Harvesting
-  Harvested
+enum CropStatus {
+  growing
+  harvesting
+  harvested
 }
 
 model Market {
