@@ -8,6 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../services/auth/jwt-auth.guard';
+import { AddSoilDto } from './dto/add-soil.dto';
 import { AddWeatherDto } from './dto/add-weather.dto';
 import { CreateFarmDto } from './dto/create-farm.dto';
 import { FarmsService } from './farms.service';
@@ -32,6 +33,20 @@ export class FarmsController {
     );
 
     return { message: 'Farm weather successfully added!', farm };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':farmId/add-soil')
+  async addFarmSoil(
+    @Req() req,
+    @Param('farmId') farmId: string,
+    @Body() soilBody: AddSoilDto,
+  ) {
+    const { id: userId } = req.user;
+
+    const farm = await this.farmsService.addFarmSoil(userId, farmId, soilBody);
+
+    return { message: 'Farm soil successfully added!', farm };
   }
 
   @UseGuards(JwtAuthGuard)

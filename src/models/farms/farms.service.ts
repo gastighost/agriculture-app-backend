@@ -31,4 +31,26 @@ export class FarmsService {
       data: { weather: { push: weatherBody } },
     });
   }
+
+  async addFarmSoil(
+    userId: string,
+    farmId: string,
+    soilBody: Prisma.SoilCreateInput,
+  ) {
+    const farm = await this.prismaService.farm.findUnique({
+      where: { id: farmId },
+    });
+
+    if (userId !== farm.userId) {
+      throw new HttpException(
+        'You are not authorized to update this farm',
+        403,
+      );
+    }
+
+    return this.prismaService.farm.update({
+      where: { id: farmId },
+      data: { soil: { push: soilBody } },
+    });
+  }
 }
