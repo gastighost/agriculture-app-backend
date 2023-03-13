@@ -21,6 +21,14 @@ model Location {
   Market    Market[]
 }
 
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  email    String @unique
+  password String
+  Farm     Farm[]
+}
+
 model Farm {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   name       String
@@ -30,6 +38,8 @@ model Farm {
   crops      Crop[]
   weather    Weather[]
   soil       Soil[]
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     String    @db.ObjectId
 }
 
 type Weather {
