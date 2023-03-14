@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -57,5 +58,13 @@ export class CropsController {
     const crop = await this.cropsService.updateCrop(cropId, cropBody);
 
     return { message: 'Crop has successfully been updated!', crop };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':cropId')
+  async deleteCrop(@Param('cropId') cropId: string) {
+    const crop = await this.cropsService.deleteCrop(cropId);
+
+    return { message: 'Crop has successfully been deleted!', crop };
   }
 }
