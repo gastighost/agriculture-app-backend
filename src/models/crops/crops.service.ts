@@ -17,4 +17,8 @@ export class CropsService {
   async createCrop(cropData: Prisma.CropCreateInput) {
     return this.prismaService.crop.create({ data: cropData });
   }
+
+  async updateCrop(id: string, cropData: Prisma.CropUpdateInput) {
+    return this.prismaService.crop.update({ where: { id }, data: cropData });
+  }
 }

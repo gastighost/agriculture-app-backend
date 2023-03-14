@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -11,6 +12,7 @@ import { JwtAuthGuard } from '../../services/auth/jwt-auth.guard';
 import { CropsService } from './crops.service';
 import { CreateCropDto } from './dto/create-crop-dto';
 import { CropQueryDto } from './dto/crop-query.dto';
+import { UpdateCropDto } from './dto/update-crop.dto';
 
 @Controller('crops')
 export class CropsController {
@@ -44,5 +46,16 @@ export class CropsController {
     });
 
     return { message: 'Crop successfully created!', crop };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':cropId')
+  async updateCrop(
+    @Param('cropId') cropId: string,
+    @Body() cropBody: UpdateCropDto,
+  ) {
+    const crop = await this.cropsService.updateCrop(cropId, cropBody);
+
+    return { message: 'Crop has successfully been updated!', crop };
   }
 }
