@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -10,6 +11,7 @@ import {
 import { JwtAuthGuard } from '../../services/auth/jwt-auth.guard';
 import { CreateMarketDto } from './dto/create-market.dto';
 import { QueryMarketDto } from './dto/query-market.dto';
+import { UpdateMarketDto } from './dto/update-market.dto';
 import { MarketsService } from './markets.service';
 
 @Controller('markets')
@@ -41,5 +43,16 @@ export class MarketsController {
     const market = await this.marketsService.getMarket(id);
 
     return { message: 'Market successfully retrieved!', market };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  async updateMarket(
+    @Param('id') id: string,
+    @Body() marketBody: UpdateMarketDto,
+  ) {
+    const market = await this.marketsService.updateMarket(id, marketBody);
+
+    return { message: 'Market successfully updated!', market };
   }
 }

@@ -36,4 +36,11 @@ export class MarketsService {
   async getMarket(marketId: string) {
     return this.prismaService.market.findUnique({ where: { id: marketId } });
   }
+
+  async updateMarket(marketId: string, marketData: Prisma.MarketUpdateInput) {
+    return this.prismaService.market.update({
+      where: { id: marketId },
+      data: marketData,
+    });
+  }
 }
