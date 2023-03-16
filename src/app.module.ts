@@ -6,6 +6,7 @@ import { UsersModule } from './models/users/users.module';
 import { AuthModule } from './services/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { CropsModule } from './models/crops/crops.module';
+import { MarketsModule } from './models/markets/markets.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CropsModule } from './models/crops/crops.module';
       isGlobal: true,
     }),
     CropsModule,
+    MarketsModule,
   ],
 })
 export class AppModule {}

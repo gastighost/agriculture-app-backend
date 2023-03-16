@@ -76,7 +76,7 @@ enum CropStatus {
 
 model Market {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  Crop       Crop     @relation(fields: [cropId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  crop       Crop     @relation(fields: [cropId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   cropId     String   @db.ObjectId
   price      Float
   amountKg   Float

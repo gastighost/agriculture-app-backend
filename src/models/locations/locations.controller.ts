@@ -24,7 +24,7 @@ export class LocationsController {
 
   @Get()
   async getAllLocations() {
-    const locations = await this.locationsService.getAllLocations();
+    const locations = await this.locationsService.getAllLocations({});
 
     return { message: 'Locations successfully retrieved!', locations };
   }

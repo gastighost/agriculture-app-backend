@@ -10,8 +10,8 @@ export class LocationsService {
     return this.prismaService.location.create({ data: locationData });
   }
 
-  async getAllLocations() {
-    return this.prismaService.location.findMany();
+  async getAllLocations(queryData: Prisma.LocationWhereInput) {
+    return this.prismaService.location.findMany({ where: queryData });
   }
 
   async getLocation(id: string) {
