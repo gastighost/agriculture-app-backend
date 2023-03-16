@@ -32,4 +32,8 @@ export class MarketsService {
   async getMarkets(queryData: Prisma.MarketWhereInput) {
     return this.prismaService.market.findMany({ where: queryData });
   }
+
+  async getMarket(marketId: string) {
+    return this.prismaService.market.findUnique({ where: { id: marketId } });
+  }
 }

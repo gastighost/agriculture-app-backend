@@ -34,4 +34,12 @@ export class MarketsController {
 
     return { message: 'Markets successfully retrieved!', markets };
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  async getMarket(@Param('id') id: string) {
+    const market = await this.marketsService.getMarket(id);
+
+    return { message: 'Market successfully retrieved!', market };
+  }
 }
