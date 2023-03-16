@@ -6,8 +6,10 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateLocationDto } from './dto/create-location.dto';
+import { QueryLocationDto } from './dto/query-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
 import { LocationsService } from './locations.service';
 
@@ -23,8 +25,8 @@ export class LocationsController {
   }
 
   @Get()
-  async getAllLocations() {
-    const locations = await this.locationsService.getAllLocations({});
+  async getAllLocations(@Query() query: QueryLocationDto) {
+    const locations = await this.locationsService.getAllLocations(query);
 
     return { message: 'Locations successfully retrieved!', locations };
   }

@@ -11,7 +11,15 @@ export class LocationsService {
   }
 
   async getAllLocations(queryData: Prisma.LocationWhereInput) {
-    return this.prismaService.location.findMany({ where: queryData });
+    const { name, region, country } = queryData;
+
+    return this.prismaService.location.findMany({
+      where: {
+        name: { equals: name as string, mode: 'insensitive' },
+        region: { equals: region as string, mode: 'insensitive' },
+        country: { equals: country as string, mode: 'insensitive' },
+      },
+    });
   }
 
   async getLocation(id: string) {
