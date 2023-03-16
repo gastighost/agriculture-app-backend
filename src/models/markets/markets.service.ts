@@ -43,4 +43,8 @@ export class MarketsService {
       data: marketData,
     });
   }
+
+  async deleteMarket(marketId: string) {
+    return this.prismaService.market.delete({ where: { id: marketId } });
+  }
 }

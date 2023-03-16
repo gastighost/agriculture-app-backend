@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -54,5 +55,13 @@ export class MarketsController {
     const market = await this.marketsService.updateMarket(id, marketBody);
 
     return { message: 'Market successfully updated!', market };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  async deleteMarket(@Param('id') id: string) {
+    const market = await this.marketsService.deleteMarket(id);
+
+    return { message: 'Market successfully deleted', market };
   }
 }
