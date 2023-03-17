@@ -10,7 +10,12 @@ async function bootstrap() {
 
   app.use(helmet());
 
-  app.enableCors({ origin: ['http://localhost:3000'] });
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'https://agriculture-app-frontend.herokuapp.com',
+    ],
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
