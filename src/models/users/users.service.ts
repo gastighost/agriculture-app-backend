@@ -14,6 +14,14 @@ export class UsersService {
   async createUser(userData: Prisma.UserCreateInput) {
     const { username, email, password } = userData;
 
+    const existingUser = await this.prismaService.user.findFirst({
+      where: { OR: [{ username }, { email }] },
+    });
+
+    if (existingUser) {
+      throw new HttpException('Username or email has already been taken', 400);
+    }
+
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const savedUser = await this.prismaService.user.create({
