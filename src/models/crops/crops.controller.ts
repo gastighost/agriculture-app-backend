@@ -41,10 +41,7 @@ export class CropsController {
     @Param('farmId') farmId: string,
     @Body() cropBody: CreateCropDto,
   ) {
-    const crop = await this.cropsService.createCrop({
-      ...cropBody,
-      farm: { connect: { id: farmId } },
-    });
+    const crop = await this.cropsService.createCrop(farmId, cropBody);
 
     return { message: 'Crop successfully created!', crop };
   }

@@ -92,11 +92,11 @@ export class FarmsController {
   ) {
     const { id: userId } = req.user;
 
-    const farm = await this.farmsService.createFarm({
-      ...farmBody,
-      location: { connect: { id: locationId } },
-      user: { connect: { id: userId } },
-    });
+    const farm = await this.farmsService.createFarm(
+      locationId,
+      userId,
+      farmBody,
+    );
 
     return { message: 'Farm successfully created!', farm };
   }

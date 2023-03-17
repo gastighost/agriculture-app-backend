@@ -2,6 +2,8 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../services/prisma/prisma.service';
 
+type FarmCreateInput = Omit<Prisma.FarmCreateInput, 'user' | 'location'>;
+
 @Injectable()
 export class FarmsService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -17,8 +19,18 @@ export class FarmsService {
     return this.prismaService.farm.findUnique({ where: { id } });
   }
 
-  async createFarm(farmData: Prisma.FarmCreateInput) {
-    return this.prismaService.farm.create({ data: farmData });
+  async createFarm(
+    locationId: string,
+    userId: string,
+    farmData: FarmCreateInput,
+  ) {
+    return this.prismaService.farm.create({
+      data: {
+        ...farmData,
+        location: { connect: { id: locationId } },
+        user: { connect: { id: userId } },
+      },
+    });
   }
 
   async addFarmWeather(
