@@ -15,9 +15,9 @@ export class LocationsService {
 
     return this.prismaService.location.findMany({
       where: {
-        name: { equals: name as string, mode: 'insensitive' },
-        region: { equals: region as string, mode: 'insensitive' },
-        country: { equals: country as string, mode: 'insensitive' },
+        name: { contains: name as string, mode: 'insensitive' },
+        region: { contains: region as string, mode: 'insensitive' },
+        country: { contains: country as string, mode: 'insensitive' },
       },
     });
   }
