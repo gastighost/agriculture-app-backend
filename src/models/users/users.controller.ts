@@ -1,4 +1,13 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { JwtAuthGuard } from '../../services/auth/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UsersService } from './users.service';
@@ -22,5 +31,13 @@ export class UsersController {
     const token = await this.usersService.login(username, password);
 
     return { message: 'User successfully logged in!', token };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  async getLoggedInUser(@Req() req) {
+    const { user } = req;
+
+    return { message: 'User profile retrieved!', user };
   }
 }
