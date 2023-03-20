@@ -7,6 +7,7 @@ import { AuthModule } from './services/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { CropsModule } from './models/crops/crops.module';
 import { MarketsModule } from './models/markets/markets.module';
+import { WebsocketsModule } from './services/websockets/websockets.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { MarketsModule } from './models/markets/markets.module';
     }),
     CropsModule,
     MarketsModule,
+    WebsocketsModule,
   ],
 })
 export class AppModule {}
