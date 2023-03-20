@@ -15,9 +15,8 @@ export class WebsocketsGateway {
   @SubscribeMessage('message')
   handleMessage(
     @MessageBody() { id, message }: { id: string; message: string },
-    @ConnectedSocket() client: Socket,
   ) {
-    client.emit(id, message);
+    this.server.emit(id, message);
   }
 
   emitMessage(event: string, message: string) {
