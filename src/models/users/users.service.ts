@@ -52,4 +52,11 @@ export class UsersService {
 
     return token;
   }
+
+  async getOtherUsers(userId: string) {
+    return this.prismaService.user.findMany({
+      where: { NOT: { id: userId } },
+      select: { id: true, username: true },
+    });
+  }
 }

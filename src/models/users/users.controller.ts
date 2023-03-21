@@ -40,4 +40,14 @@ export class UsersController {
 
     return { message: 'User profile retrieved!', user };
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('others')
+  async getOtherUsers(@Req() req) {
+    const { id } = req.user;
+
+    const otherUsers = await this.usersService.getOtherUsers(id);
+
+    return { message: 'Other users retrieved!', otherUsers };
+  }
 }
