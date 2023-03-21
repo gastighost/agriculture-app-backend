@@ -59,4 +59,15 @@ export class UsersService {
       select: { id: true, username: true },
     });
   }
+
+  async editUser(userId: string, userData: Prisma.UserUpdateInput) {
+    if (userData.password) {
+      userData.password = await bcrypt.hash(userData.password as string, 12);
+    }
+
+    return this.prismaService.user.update({
+      where: { id: userId },
+      data: userData,
+    });
+  }
 }
