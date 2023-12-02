@@ -13,7 +13,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
-      'https://agriculture-app-frontend.herokuapp.com',
+      'https://agriculture-app-frontend-54a55118666e.herokuapp.com',
     ],
   });
 
